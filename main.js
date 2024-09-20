@@ -44,10 +44,10 @@ for (let i = 0; i < components.length; i++) {
 
 function drawCompositeImage(ctx, images) {
     ctx.fillStyle = "#fff";
-    ctx.fillRect(0, 0, 1280, 1024);
+    ctx.fillRect(0, 0, images[0].width, images[0].height);
     for (let i = 0; i < images.length; i++) {
         const image = images[i];
-        const component = components[layerToComponent[imageCount - (i + 1)]];
+        const component = components[layerToComponent[images.length - (i + 1)]];
         drawTinted(ctx, image, palette[component.colorKey]);
     }
 }
@@ -55,7 +55,7 @@ function drawCompositeImage(ctx, images) {
 document.addEventListener("DOMContentLoaded", async () => {
     const images = await imagePromises;
     const canvas = document.getElementById("main-canvas");
-    setCanvasSize(canvas, 1280, 1024);
+    setCanvasSize(canvas, images[0].width, images[0].height);
     const ctx = canvas.getContext("2d");
 
     drawCompositeImage(ctx, images);
@@ -142,14 +142,14 @@ function setCanvasSize(canvas, width, height) {
 
 function drawTinted(ctx, image, color) {
     const tempCanvas = document.createElement("canvas");
-    setCanvasSize(tempCanvas, 1280, 1024);
+    setCanvasSize(tempCanvas, image.width, image.height);
     const tempCtx = tempCanvas.getContext("2d");
 
     // Create a flat-colored stencil of the input image
     tempCtx.drawImage(image, 0, 0);
     tempCtx.globalCompositeOperation = "source-atop";
     tempCtx.fillStyle = color;
-    tempCtx.fillRect(0, 0, 1280, 1024);
+    tempCtx.fillRect(0, 0, image.width, image.height);
 
     // Shade the stencil
     // TODO: for some reason, this causes the alpha to be lost around the edges?
