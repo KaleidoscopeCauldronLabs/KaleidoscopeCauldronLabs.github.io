@@ -122,11 +122,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         paletteColorEl.addEventListener("click", () => {
             const colorKey = elToColorKey.get(paletteColorEl);
             selectedComponent.colorKey = colorKey;
-            const componentEl = componentToEl
+            componentToEl
                 .get(selectedComponent)
                 .getElementsByClassName("color-icon")[0]
                 .style = `background: ${palette[colorKey]}`;
-            console.log(componentEl)
             updateSelectedColor(colorKey);
             drawCompositeImage(ctx, images);
         });

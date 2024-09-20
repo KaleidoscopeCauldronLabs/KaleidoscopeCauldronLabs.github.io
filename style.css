@@ -26,7 +26,6 @@ body {
 #layer-list {
     display: flex;
     flex-direction: column;
-    /* gap: 4px; */
 }
 
 .list-item {
@@ -47,7 +46,7 @@ body {
     background: #ccc;
 }
 
-.color-icon{
+.color-icon {
     border: 2px solid black;
     border-radius: 50%;
     width: 16px;
