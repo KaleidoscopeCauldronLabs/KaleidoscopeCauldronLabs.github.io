@@ -45,6 +45,11 @@ select {
     border-radius: 3px;
 }
 
+#color-name {
+    font-size: 18px;
+    padding-left: 8px;
+}
+
 #layers {
     display: flex;
     flex-direction: column;
@@ -78,6 +83,12 @@ select {
     border-radius: 50%;
     width: 16px;
     height: 16px;
+}
+
+.color-palette-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 #color-palette {

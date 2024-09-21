@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const componentToEl = new Map();
     const elToComponent = new Map();
     const componentEls = components.map(component => {
-        const el = div({ class: "list-item" }, [
+        const el = div({ class: "list-item", title: component.colorKey }, [
             div({
                 class: "color-icon",
                 style: `background: ${palette[component.colorKey]}`,
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const colorKeyToEl = new Map();
     const elToColorKey = new Map();
     const paletteColorEls = Object.entries(palette).map(([key, color]) => {
-        const el = div({ class: "palette-color" }, [
+        const el = div({ class: "palette-color", title: key }, [
             div({ class: "color-icon", style: `background: ${color}` }, [])
         ])
         colorKeyToEl.set(key, el);
@@ -149,11 +149,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
     mountEl(paletteEl, paletteColorEls);
 
-    function changeComponentColor(component, colorKey) {
-        componentToEl
+    function setComponentColor(component, colorKey) {
+        const el = componentToEl
             .get(component)
-            .getElementsByClassName("color-icon")[0]
-            .style = `background: ${palette[colorKey]}`;
+            .getElementsByClassName("color-icon")[0];
+        el.style = `background: ${palette[colorKey]}`;
+        el.parentNode.setAttribute("title", colorKey);
     }
 
     const presetOptionEls = Object.keys(presets).map(presetKey => (
@@ -164,7 +165,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const presetKey = e.target.value;
         const preset = presets[presetKey];
         for (const component of components) {
-            changeComponentColor(component, preset[component.label]);
+            setComponentColor(component, preset[component.label]);
         }
         applyPreset(presetKey);
         drawCompositeImage(ctx, images);
@@ -189,10 +190,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         el.classList.add("selected");
     }
 
+    const colorNameEl = document.getElementById("color-name");
+
     for (let i = 0; i < componentEls.length; i++) {
         const componentEl = componentEls[i];
         componentEl.addEventListener("click", () => {
             const component = components[i];
+            colorNameEl.innerText = component.colorKey;
             updateSelectedComponent(component);
             updateSelectedColor(component.colorKey);
         });
@@ -202,8 +206,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         const paletteColorEl = paletteColorEls[i];
         paletteColorEl.addEventListener("click", () => {
             const colorKey = elToColorKey.get(paletteColorEl);
+            colorNameEl.innerText = colorKey;
             selectedComponent.colorKey = colorKey;
-            changeComponentColor(selectedComponent, colorKey);
+            setComponentColor(selectedComponent, colorKey);
             updateSelectedColor(colorKey);
             drawCompositeImage(ctx, images);
         });
