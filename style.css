@@ -7,6 +7,26 @@ body {
     gap: 1rem;
 }
 
+button {
+    cursor: pointer;
+    font-family: "Trebuchet MS";
+    font-size: 16px;
+    border-radius: 3px;
+    border: none;
+    width: fit-content;
+    padding: 8px 16px;
+    color: white;
+    background: #de4343;
+}
+
+button:hover {
+    background: #ce3333;
+}
+
+button:active {
+    background: #be2323;
+}
+
 .preview {
     display: flex;
     flex-direction: row;

@@ -34,6 +34,14 @@ const components = [
     { label: "Cocoa", layers: [14], colorKey: "Brown" },
 ];
 
+function componentsToString(components) {
+    const outputLines = [];
+    for (const component of components) {
+        outputLines.push(`${component.label} - ${component.colorKey}`);
+    }
+    return outputLines.join("\n");
+}
+
 const layerToComponent = {}
 for (let i = 0; i < components.length; i++) {
     const component = components[i];
@@ -53,6 +61,11 @@ function drawCompositeImage(ctx, images) {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+    const copyCodeButton = document.getElementById("copy-code");
+    copyCodeButton.addEventListener("click", () => {
+        navigator.clipboard.writeText(componentsToString(components));
+    });
+
     const images = await imagePromises;
     const canvas = document.getElementById("main-canvas");
     setCanvasSize(canvas, images[0].width, images[0].height);
