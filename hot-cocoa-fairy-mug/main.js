@@ -1,5 +1,6 @@
 import { mountEl, createEl, div, text } from "/dom.js";
 import { palette } from "/constants.js";
+import { imageCount, defaultPreset, components, presets } from "./custom.js"
 
 function loadImage(src) {
     return new Promise((resolve, reject) => {
@@ -10,66 +11,11 @@ function loadImage(src) {
     });
 }
 
-const imageCount = 16;
 const imagePromises = Promise.all(
     Array(imageCount)
         .fill(null)
         .map((_x, i) => loadImage(`images/${(imageCount - (i + 1)).toString().padStart(3, "0")}.png`))
 );
-
-const components = [
-    { label: "Bow Center", layers: [0], colorKey: "Red" },
-    { label: "Bow", layers: [1], colorKey: "White" },
-    { label: "Leaves", layers: [2], colorKey: "Green" },
-    { label: "Bricks", layers: [3, 12], colorKey: "Black" },
-    { label: "Candy Stripes", layers: [4], colorKey: "Green" },
-    { label: "Candy Base", layers: [5], colorKey: "White" },
-    { label: "Snow", layers: [6], colorKey: "White" },
-    { label: "Mug", layers: [7, 15], colorKey: "Red" },
-    { label: "Doorknob", layers: [8], colorKey: "White" },
-    { label: "Door", layers: [9], colorKey: "Green" },
-    { label: "Window Frames", layers: [10], colorKey: "White" },
-    { label: "Window Panes", layers: [11], colorKey: "Light Blue" },
-    { label: "Marshmallows", layers: [13], colorKey: "White" },
-    { label: "Cocoa", layers: [14], colorKey: "Brown" },
-];
-
-const presets = {
-    "Red Mug": {
-        "Bow Center": "Red",
-        "Bow": "White",
-        "Leaves":  "Green",
-        "Bricks": "Black",
-        "Candy Stripes": "Green",
-        "Candy Base": "White",
-        "Snow": "White",
-        "Mug": "Red",
-        "Doorknob": "White",
-        "Door": "Green",
-        "Window Frames": "White",
-        "Window Panes": "Light Blue",
-        "Marshmallows": "White",
-        "Cocoa": "Brown",
-    },
-    "Green Mug": {
-        "Bow Center": "White",
-        "Bow": "Red",
-        "Leaves":  "Spruce",
-        "Bricks": "Black",
-        "Candy Stripes": "Red",
-        "Candy Base": "White",
-        "Snow": "White",
-        "Mug": "Green",
-        "Doorknob": "White",
-        "Door": "Red",
-        "Window Frames": "White",
-        "Window Panes": "Light Blue",
-        "Marshmallows": "White",
-        "Cocoa": "Brown",
-    },
-};
-
-const defaultPreset = "Red Mug";
 
 function applyPreset(presetKey) {
     const preset = presets[presetKey];
