@@ -1,5 +1,5 @@
-import { mountEl, createEl, div, text } from "./dom.js";
-import { palette } from "./constants.js";
+import { mountEl, createEl, div, text } from "/dom.js";
+import { palette } from "/constants.js";
 
 function loadImage(src) {
     return new Promise((resolve, reject) => {

@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/global.css">
+        <link rel="stylesheet" href="./style.css">
+        <script type="module" src="./main.js"></script>
+    </head>
+    <body>
+        <h1>Hot Cocoa Fairy Mug</h1>
+        <div class="container">
+            <div class="main-section">
+                <canvas id="main-canvas"></canvas>
+                <div class="label-section">
+                    <div id="selected-color" class="label">Color Palette</div>
+                    <div id="color-palette"></div>
+                </div>
+                <button id="copy-code">Copy code to clipboard</button>
+            </div>
+            <div class="component-colors">
+                <div class="label-section">
+                    <div class="label">Presets</div>
+                    <select id="preset-selector"></select>
+                </div>
+                <div class="label-section">
+                    <div class="label">Component Colors</div>
+                    <div id="layer-list"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
