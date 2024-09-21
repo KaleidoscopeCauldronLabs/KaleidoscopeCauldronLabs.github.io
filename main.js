@@ -1,4 +1,4 @@
-import { mountEl, div, text } from "./dom.js";
+import { mountEl, createEl, div, text } from "./dom.js";
 import { palette } from "./constants.js";
 
 function loadImage(src) {
@@ -33,6 +33,50 @@ const components = [
     { label: "Marshmallows", layers: [13], colorKey: "White" },
     { label: "Cocoa", layers: [14], colorKey: "Brown" },
 ];
+
+const presets = {
+    "Red Mug": {
+        "Bow Center": "Red",
+        "Bow": "White",
+        "Leaves":  "Green",
+        "Bricks": "Black",
+        "Candy Stripes": "Green",
+        "Candy Base": "White",
+        "Snow": "White",
+        "Mug": "Red",
+        "Doorknob": "White",
+        "Door": "Green",
+        "Window Frames": "White",
+        "Window Panes": "Light Blue",
+        "Marshmallows": "White",
+        "Cocoa": "Brown",
+    },
+    "Green Mug": {
+        "Bow Center": "White",
+        "Bow": "Red",
+        "Leaves":  "Spruce",
+        "Bricks": "Black",
+        "Candy Stripes": "Red",
+        "Candy Base": "White",
+        "Snow": "White",
+        "Mug": "Green",
+        "Doorknob": "White",
+        "Door": "Red",
+        "Window Frames": "White",
+        "Window Panes": "Light Blue",
+        "Marshmallows": "White",
+        "Cocoa": "Brown",
+    },
+};
+
+const defaultPreset = "Red Mug";
+
+function applyPreset(presetKey) {
+    const preset = presets[presetKey];
+    for (const component of components) {
+        component.colorKey = preset[component.label];
+    }
+}
 
 function componentsToString(components) {
     const outputLines = [];
@@ -71,6 +115,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     setCanvasSize(canvas, images[0].width, images[0].height);
     const ctx = canvas.getContext("2d");
 
+    applyPreset(defaultPreset);
+
     drawCompositeImage(ctx, images);
 
     const componentListEl = document.getElementById("layer-list");
@@ -102,6 +148,28 @@ document.addEventListener("DOMContentLoaded", async () => {
         return el;
     });
     mountEl(paletteEl, paletteColorEls);
+
+    function changeComponentColor(component, colorKey) {
+        componentToEl
+            .get(component)
+            .getElementsByClassName("color-icon")[0]
+            .style = `background: ${palette[colorKey]}`;
+    }
+
+    const presetOptionEls = Object.keys(presets).map(presetKey => (
+        createEl("option", {}, [text(presetKey)])
+    ));
+    const presetSelectorEl = document.getElementById("preset-selector");
+    presetSelectorEl.addEventListener("change", e => {
+        const presetKey = e.target.value;
+        const preset = presets[presetKey];
+        for (const component of components) {
+            changeComponentColor(component, preset[component.label]);
+        }
+        applyPreset(presetKey);
+        drawCompositeImage(ctx, images);
+    });
+    mountEl(presetSelectorEl, presetOptionEls);
 
     let selectedComponent = null;
     function updateSelectedComponent(component) {
@@ -135,10 +203,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         paletteColorEl.addEventListener("click", () => {
             const colorKey = elToColorKey.get(paletteColorEl);
             selectedComponent.colorKey = colorKey;
-            componentToEl
-                .get(selectedComponent)
-                .getElementsByClassName("color-icon")[0]
-                .style = `background: ${palette[colorKey]}`;
+            changeComponentColor(selectedComponent, colorKey);
             updateSelectedColor(colorKey);
             drawCompositeImage(ctx, images);
         });

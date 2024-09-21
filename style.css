@@ -27,6 +27,13 @@ button:active {
     background: #be2323;
 }
 
+select {
+    cursor: pointer;
+    font-family: "Trebuchet MS";
+    font-size: 16px;
+    border-radius: 3px;
+}
+
 .preview {
     display: flex;
     flex-direction: row;
@@ -92,4 +99,10 @@ button:active {
 
 .palette-color.selected {
     background: #ccc;
+}
+
+.component-colors {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
