@@ -190,13 +190,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         el.classList.add("selected");
     }
 
-    const colorNameEl = document.getElementById("color-name");
+    const colorNameEl = document.getElementById("selected-color");
 
     for (let i = 0; i < componentEls.length; i++) {
         const componentEl = componentEls[i];
         componentEl.addEventListener("click", () => {
             const component = components[i];
-            colorNameEl.innerText = component.colorKey;
+            colorNameEl.innerText = `Color Palette - ${component.colorKey}`;
             updateSelectedComponent(component);
             updateSelectedColor(component.colorKey);
         });
@@ -206,7 +206,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const paletteColorEl = paletteColorEls[i];
         paletteColorEl.addEventListener("click", () => {
             const colorKey = elToColorKey.get(paletteColorEl);
-            colorNameEl.innerText = colorKey;
+            colorNameEl.innerText = `Color Palette - ${colorKey}`;
             selectedComponent.colorKey = colorKey;
             setComponentColor(selectedComponent, colorKey);
             updateSelectedColor(colorKey);
