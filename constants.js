@@ -1,6 +1,7 @@
 export const palette = {
-    "White": "#ffffff",
-    "Black": "#101820",
+    "White": "#ffffff", // Polymaker White ABS
+    "Black": "#101820", // Polymaker Black ABS
+    "Clear": "e3fdff", //Sunlu Clear ABS
     "Eggplant": "#292036", // Polymaker Dark Purple ABS
     "Purple": "#6E3FA3", // Polymaker Purple ABS
     "Navy": "#002677", // Polymaker Blue ABS
@@ -22,3 +23,4 @@ export const palette = {
     "Sand": "#968c59", // Polymaker Olive Brown ASA
     "Brown": "#775C50", // Polymaker Army Brown ASA
 };
+//Currently updated with all Polymaker and Sunlu
