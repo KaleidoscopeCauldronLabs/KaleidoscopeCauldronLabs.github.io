@@ -29,8 +29,8 @@ export const presets = {
     "Green Present": {
         "Present Box": "Green",
         "Ribbon & Bow": "Red",
-        "Wood": "Brown",
-        "Chimney": "Silver",
+        "Wood": "Dirt Brown",
+        "Chimney": "Metallic Silver",
         "Frames & Doorknob": "White",
         "Door": "Red",
         "Glass": "Clear",
@@ -42,8 +42,8 @@ export const presets = {
     "Red Present": {
         "Present Box": "Red",
         "Ribbon & Bow": "Green",
-        "Wood": "Brown",
-        "Chimney": "Silver",
+        "Wood": "Dirt Brown",
+        "Chimney": "Metallic Silver",
         "Frames & Doorknob": "White",
         "Door": "Green",
         "Glass": "Clear",

@@ -41,7 +41,7 @@ export const presets = {
         "Door": "Green",
         "Glass": "Clear",
         "Marshmallows": "White",
-        "Cocoa": "Brown",
+        "Cocoa": "Chocolate",
     },
     "Green Mug": {
         "Bow Center": "White",
@@ -56,6 +56,6 @@ export const presets = {
         "Door": "Red",
         "Glass": "Clear",
         "Marshmallows": "White",
-        "Cocoa": "Brown",
+        "Cocoa": "Chocolate",
     },
 };
