@@ -1,4 +1,5 @@
 import { mountEl, createEl, div, text } from "/dom.js";
+import { drawCompositeImage } from "/graphics.js"
 import { palette } from "/constants.js";
 import { imageCount, defaultPreset, components, presets } from "./custom.js"
 
@@ -40,16 +41,6 @@ for (let i = 0; i < components.length; i++) {
     }
 }
 
-function drawCompositeImage(ctx, images) {
-    ctx.fillStyle = "#fff";
-    ctx.fillRect(0, 0, images[0].width, images[0].height);
-    for (let i = 0; i < images.length; i++) {
-        const image = images[i];
-        const component = components[layerToComponent[images.length - (i + 1)]];
-        drawTinted(ctx, image, palette[component.colorKey]);
-    }
-}
-
 document.addEventListener("DOMContentLoaded", async () => {
     const copyCodeButton = document.getElementById("copy-code");
     copyCodeButton.addEventListener("click", () => {
@@ -63,7 +54,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     applyPreset(defaultPreset);
 
-    drawCompositeImage(ctx, images);
+    function indexToColor(index) {
+        const component = components[layerToComponent[images.length - (index + 1)]];
+        return palette[component.colorKey];
+    }
+
+    drawCompositeImage(ctx, images, indexToColor);
 
     const componentListEl = document.getElementById("layer-list");
     const componentToEl = new Map();
@@ -114,7 +110,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             setComponentColor(component, preset[component.label]);
         }
         applyPreset(presetKey);
-        drawCompositeImage(ctx, images);
+        drawCompositeImage(ctx, images, indexToColor);
     });
     mountEl(presetSelectorEl, presetOptionEls);
 
@@ -156,7 +152,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             selectedComponent.colorKey = colorKey;
             setComponentColor(selectedComponent, colorKey);
             updateSelectedColor(colorKey);
-            drawCompositeImage(ctx, images);
+            drawCompositeImage(ctx, images, indexToColor);
         });
     }
 });
@@ -166,24 +162,4 @@ function setCanvasSize(canvas, width, height) {
     canvas.height = height;
     canvas.style.width = `${width / 2}px`;
     canvas.style.height = `${height / 2}px`;
-}
-
-function drawTinted(ctx, image, color) {
-    const tempCanvas = document.createElement("canvas");
-    setCanvasSize(tempCanvas, image.width, image.height);
-    const tempCtx = tempCanvas.getContext("2d");
-
-    // Create a flat-colored stencil of the input image
-    tempCtx.drawImage(image, 0, 0);
-    tempCtx.globalCompositeOperation = "source-atop";
-    tempCtx.fillStyle = color;
-    tempCtx.fillRect(0, 0, image.width, image.height);
-
-    // Shade the stencil
-    // TODO: for some reason, this causes the alpha to be lost around the edges?
-    tempCtx.globalCompositeOperation = "multiply";
-    tempCtx.drawImage(image, 0, 0);
-
-    // Draw it onto the output
-    ctx.drawImage(tempCanvas, 0, 0);
 }
