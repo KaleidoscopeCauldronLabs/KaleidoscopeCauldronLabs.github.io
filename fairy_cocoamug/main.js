@@ -1,5 +1,5 @@
 import { mountEl, createEl, div, text } from "/dom.js";
-import { drawCompositeImage } from "/graphics.js"
+import { drawCompositeImageRendered } from "/graphics.js"
 import { palette } from "/constants.js";
 import { imageCount, defaultPreset, components, presets } from "./custom.js"
 
@@ -17,6 +17,8 @@ const imagePromises = Promise.all(
         .fill(null)
         .map((_x, i) => loadImage(`images/${(imageCount - (i + 1)).toString().padStart(3, "0")}.png`))
 );
+
+const renderedImagePromise = loadImage("images/render.png")
 
 function applyPreset(presetKey) {
     const preset = presets[presetKey];
@@ -48,6 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     const images = await imagePromises;
+    const renderedImage = await renderedImagePromise;
     const canvas = document.getElementById("main-canvas");
     setCanvasSize(canvas, images[0].width, images[0].height);
     const ctx = canvas.getContext("2d");
@@ -59,7 +62,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return palette[component.colorKey];
     }
 
-    drawCompositeImage(ctx, images, indexToColor);
+    drawCompositeImageRendered(ctx, images, renderedImage, indexToColor);
 
     const componentListEl = document.getElementById("layer-list");
     const componentToEl = new Map();
@@ -110,7 +113,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             setComponentColor(component, preset[component.label]);
         }
         applyPreset(presetKey);
-        drawCompositeImage(ctx, images, indexToColor);
+        drawCompositeImageRendered(ctx, images, renderedImage, indexToColor);
     });
     mountEl(presetSelectorEl, presetOptionEls);
 
@@ -152,7 +155,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             selectedComponent.colorKey = colorKey;
             setComponentColor(selectedComponent, colorKey);
             updateSelectedColor(colorKey);
-            drawCompositeImage(ctx, images, indexToColor);
+            drawCompositeImageRendered(ctx, images, renderedImage, indexToColor);
         });
     }
 });
