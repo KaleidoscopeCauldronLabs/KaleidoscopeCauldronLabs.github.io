@@ -9,19 +9,19 @@ export const defaultPreset = "Red Mug";
 // `layers` is a list of each image layer that should change color together -
 // the numbers match those in `./images`.
 export const components = [
-    { label: "Mug", layers: [7, 15] },
-    { label: "Bricks", layers: [3, 12] },
-    { label: "Candy Base", layers: [5] },
-    { label: "Candy Stripes", layers: [4] },
-    { label: "Leaves", layers: [2] },
+    { label: "Mug", layers: [13] },
+    { label: "Bricks", layers: [14, 12] },
+    { label: "Frames & Doorknob", layers: [7, 6] },
+    { label: "Door", layers: [8] },
+    { label: "Leaves", layers: [5, 2] },
     { label: "Bow", layers: [1] },
     { label: "Bow Center", layers: [0] },
-    { label: "Frames & Doorknob", layers: [10, 8] },
-    { label: "Door", layers: [9] },
-    { label: "Glass", layers: [11] },
-    { label: "Marshmallows", layers: [13] },
-    { label: "Cocoa", layers: [14] },
-    { label: "Snow", layers: [6] },
+    { label: "Candy Base", layers: [4] },
+    { label: "Candy Stripes", layers: [3] },
+    { label: "Glass", layers: [9] },
+    { label: "Marshmallows", layers: [10] },
+    { label: "Cocoa", layers: [11] },
+    { label: "Snow", layers: [15] },
 ];
 
 // Preset keys can be named anything.
